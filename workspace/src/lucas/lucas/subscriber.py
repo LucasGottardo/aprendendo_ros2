@@ -3,17 +3,17 @@ from rclpy.node import node
 
 import numpy
 
-from sensors_msgs.msg import LaserScan
+from sensor_msgs.msg import LaserScan
 
-distancia_direita = numpy.array(self.laser[80:100]).mean()
 
 class MeuNo(Node):
 
     # Contrutor do nó
     def __init__(self):
         # Aqui é definido o nome do nó
-        super().__init__('listener')
-        self.subscription = self.create_subscription(String, distancia_direita , self.listener_callback,qos_profile)
+        super().__init__('subscriber')
+        self.subscription = self.create_subscription(LaserScan,'scan', self.listener_callback, 10)
+
 
     # Aqui o seu nó está executando no ROS
     def run(self):
@@ -22,7 +22,9 @@ class MeuNo(Node):
         rclpy.spin_once(self)
 
     def listener_callback(self, msg):
-        self.get_logger().info('mensagem publicada: "%s"' %msg.data)
+        distancia_direita = numpy.array(self.laser[80:100]).mean()
+
+        self.get_logger().info('Distancia: {distancia_direita:.2f}' )
 
     # Destrutor do nó
     def __del__(self):
