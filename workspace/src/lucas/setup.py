@@ -11,7 +11,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/launch', ['launch/__init.py'])
+        ('share/' + package_name + '/launch', ['launch/launcher.py']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -22,9 +22,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            publisher = lucas.publisher:main,
-            subscriber = lucas.subscriber:main,
-            lucas_launch = lucas.launcher:main,
+            'publisher = lucas.publisher:main',
         ],
     },
 )

@@ -21,11 +21,4 @@ def generate_launch_description():
             arguments=
 ['--ros-args', '--log-level', LaunchConfiguration('log_level')]
         ),
-        Node(
-            name='subscriber',
-            package='lucas',
-            executable='subscriber',
-            arguments=
-['--ros-args', '--log-level', LaunchConfiguration('log_level')]
-        ),
     ])
