@@ -24,7 +24,7 @@ class MeuNo(Node):
         self.publisher = self.create_publisher(Twist,'/cmd_vel', 10)
         self.subscription = self.create_subscription(LaserScan,'/scan', self.listener_callback, 10)
         self.subscription = self.create_subscription(Odometry, '/odom', self.Odometry_callback, 10)
-        self.objetivo = np.array([2.0,0.0])
+        self.objetivo = np.array([5.0,0.0])
 
     #manda as mensagens
     def listener_callback(self, msg):
@@ -58,23 +58,23 @@ class MeuNo(Node):
         if (distancia_final <= 0.2):
             cmd.linear.x = 0.0
             cmd.angular.z = 0.0
+            print(distancia_final)
+
 
         if (self.distancia_frente <= 1.0): #ajusta frontal
             cmd.linear.x = 0.0
-            time.sleep(2)
-            cmd.angular.z = 1.0
-            time.sleep(2)
+            cmd.angular.z = 0.2
+            
 
         if (self.distancia_direita <= 0.5): #ajusta direita
             cmd.linear.x = 0.0
-            time.sleep(2)
-            cmd.angular.z = 1.0
-            time.sleep(2)
+            cmd.angular.z = 0.2
+            
+
         if (self.distancia_esquerda <= 0.5): #ajusta esquerda
             cmd.linear.x = 0.0
-            time.sleep(2)
-            cmd.angular.z = 1.0 
-            time.sleep(2)  
+            cmd.angular.z = 0.2
+            
 
         self.publisher.publish(cmd)
 
