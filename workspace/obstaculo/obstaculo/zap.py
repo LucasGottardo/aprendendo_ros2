@@ -55,6 +55,14 @@ class MeuNo(Node):
         destino = self.objetivo - np.array([self.x, self.y])
         distancia_final = np.linalg.norm(destino)
 
+        theta = np.arctan2(destino[1], destino[0]) #ajusta a angulação da direção que o robo deve seguir
+        ajustar_angulo = theta - self.yaw
+        ajustar_angulo = np.arctan2(np.sin(ajustar_angulo), np.cos(ajustar_angulo))
+
+        if abs(ajustar_angulo) > 0.1:
+            cmd.linear.x = 0.0
+            cmd.angular.z = 0.5
+
         if (distancia_final <= 0.2):
             cmd.linear.x = 0.0
             cmd.angular.z = 0.0
