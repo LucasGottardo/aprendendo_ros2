@@ -2,7 +2,8 @@ import rclpy
 from rclpy.node import Node
 import numpy as np
 import tf_transformations
-import time
+import time 
+import random
 
 from geometry_msgs.msg import Twist
 
@@ -66,7 +67,22 @@ class MeuNo(Node):
             self.desviando = True
             self.tempo_inicio_desvio = time.time()
             cmd.linear.x = 0.0
-            cmd.angular.z = 0.2
+            cmd.angular.z = 0.0
+            self.posicao_temp_x = [(self.x + 1.5, self.y)]
+            self.posicao_temp_y = [(self.x, self.y + 1.5)]
+            random_interger = random.randint(1,2)
+            if random_interger = 1:
+                destino = self.posicao_temp_x
+                cmd.linear.x = 0.5
+                cmd.angular.y = 0.0
+                return
+            else 
+                destino = self.posicao_temp_y
+                cmd.linear.x = 0.5
+                cmd.angular.y = 0.0
+                return
+
+
             self.publisher.publish(cmd)
             return
     
