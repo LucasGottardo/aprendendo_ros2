@@ -56,27 +56,11 @@ class MeuNo(Node):
         theta = np.arctan2(destino[1], destino[0])
         ajustar_angulo = np.arctan2(np.sin(theta - self.yaw), np.cos(theta - self.yaw))
 
-        theta = np.arctan2(destino[1], destino[0]) #ajusta a angulação da direção que o robo deve seguir
-        ajustar_angulo = theta - self.yaw
-        ajustar_angulo = np.arctan2(np.sin(ajustar_angulo), np.cos(ajustar_angulo))
-
-        if abs(ajustar_angulo > 0.1):
-            cmd.linear.x = 0.0
-            cmd.angular.z = 0.5
-
         if (distancia_final <= 0.2):
             cmd.linear.x = 0.0
             cmd.angular.z = 0.0
             self.publisher.publish(cmd)
             print(distancia_final)
-<<<<<<< HEAD
-        
-        if (self.distancia_frente <= 0.5):
-            cmd.linear.x = 0.0
-            cmd.linear.z = 0.5
-
-        if (self.distancia_direita <= 0.5): #ajusta direita
-=======
 
         if not self.desviando and (self.distancia_frente <= 1.0 or self.distancia_direita <= 0.5 or self.distancia_esquerda <= 0.5):
             self.desviando = True
@@ -89,16 +73,15 @@ class MeuNo(Node):
         if self.desviando:
             if time.time() - self.tempo_inicio_desvio < 2:
                 cmd.linear.x = 0.0
-                cmd.angular.z = 0.5
+                cmd.angular.z = 0.2
                 self.publisher.publish(cmd)
                 return
             else:
                 self.desviando = False
         
         if abs(ajustar_angulo) > 0.1:
->>>>>>> 2e2e864c7e188d78560b6a219f3edce1803a16a5
             cmd.linear.x = 0.0
-            cmd.angular.z = 0.5
+            cmd.angular.z = 0.2
         else:
             cmd.linear.x = 0.2
             cmd.angular.z = 0.0
@@ -123,8 +106,4 @@ def main(args=None):
         pass
    
 if __name__ == '__main__':
-<<<<<<< HEAD
-    main()
-=======
-    main()  
->>>>>>> 2e2e864c7e188d78560b6a219f3edce1803a16a5
+    main() 
