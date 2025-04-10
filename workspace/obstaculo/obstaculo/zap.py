@@ -24,7 +24,7 @@ class MeuNo(Node):
         self.publisher = self.create_publisher(Twist,'/cmd_vel', 10)
         self.subscription = self.create_subscription(LaserScan,'/scan', self.listener_callback, 10)
         self.subscription = self.create_subscription(Odometry, '/odom', self.Odometry_callback, 10)
-        self.objetivo = np.array([5.0,0.0])
+        self.objetivo = np.array([5.0,3.0])
 
     #manda as mensagens
     def listener_callback(self, msg):
@@ -55,16 +55,22 @@ class MeuNo(Node):
         destino = self.objetivo - np.array([self.x, self.y])
         distancia_final = np.linalg.norm(destino)
 
+        theta = np.arctan2(destino[1], destino[0]) #ajusta a angulação da direção que o robo deve seguir
+        ajustar_angulo = theta - self.yaw
+        ajustar_angulo = np.arctan2(np.sin(ajustar_angulo), np.cos(ajustar_angulo))
+
+        if abs(ajustar_angulo > 0.1):
+            cmd.linear.x = 0.0
+            cmd.angular.z = 0.5
+
         if (distancia_final <= 0.2):
             cmd.linear.x = 0.0
             cmd.angular.z = 0.0
             print(distancia_final)
-
-
-        if (self.distancia_frente <= 1.0): #ajusta frontal
+        
+        if (self.distancia_frente <= 0.5):
             cmd.linear.x = 0.0
-            cmd.angular.z = 0.2
-            
+            cmd.linear.z = 0.5
 
         if (self.distancia_direita <= 0.5): #ajusta direita
             cmd.linear.x = 0.0
@@ -96,4 +102,4 @@ def main(args=None):
         pass
    
 if __name__ == '__main__':
-    main()  
+    main()
