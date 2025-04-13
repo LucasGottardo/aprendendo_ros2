@@ -3,7 +3,7 @@ from rclpy.node import Node
 import numpy as np
 import tf_transformations
 import time 
-import random
+
 
 from geometry_msgs.msg import Twist
 
@@ -28,6 +28,8 @@ class MeuNo(Node):
 
         self.desviando = False
         self.tempo_inicio_desvio = None
+        self.pode_desviar_novamente = True
+        self.tempo_cooldown = 3.0
 
     #manda as mensagens
     def listener_callback(self, msg):
@@ -70,19 +72,6 @@ class MeuNo(Node):
             cmd.angular.z = 0.0
             self.posicao_temp_x = [(self.x + 1.5, self.y)]
             self.posicao_temp_y = [(self.x, self.y + 1.5)]
-            random_interger = random.randint(1,2)
-            if random_interger = 1:
-                destino = self.posicao_temp_x
-                cmd.linear.x = 0.5
-                cmd.angular.y = 0.0
-                return
-            else 
-                destino = self.posicao_temp_y
-                cmd.linear.x = 0.5
-                cmd.angular.y = 0.0
-                return
-
-
             self.publisher.publish(cmd)
             return
     
@@ -92,17 +81,19 @@ class MeuNo(Node):
                 cmd.angular.z = 0.2
                 self.publisher.publish(cmd)
                 return
-            else:
-                self.desviando = False
-        
-        if abs(ajustar_angulo) > 0.1:
-            cmd.linear.x = 0.0
-            cmd.angular.z = 0.2
         else:
-            cmd.linear.x = 0.2
-            cmd.angular.z = 0.0
-            
-        self.publisher.publish(cmd)
+            self.desviando = False
+            self.tempo_fim_desvio = time.time()
+            self.pode_desviar_novamente = False
+            return
+        if not self.pode_desviar_novamente:
+            if time.time() - self.tempo_fim_desvio > self.tempo_cooldown:
+                self.pode_desviar_novamente = True
+        else:
+            self.publisher.publish(cmd)
+            return
+
+
 
 
     # Destrutor do nó
