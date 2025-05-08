@@ -71,12 +71,12 @@ class MeuNo(Node):
             self.posicao_temp_x = [(self.x + 1.5, self.y)]
             self.posicao_temp_y = [(self.x, self.y + 1.5)]
             random_interger = random.randint(1,2)
-            if random_interger = 1:
+            if random_interger == 1:
                 destino = self.posicao_temp_x
                 cmd.linear.x = 0.5
                 cmd.angular.y = 0.0
                 return
-            else 
+            else :
                 destino = self.posicao_temp_y
                 cmd.linear.x = 0.5
                 cmd.angular.y = 0.0
