@@ -100,9 +100,9 @@ class ObstacleAvoidance(Node):
                 self.get_logger().info("Rotação de 90 concluída. Avançando por 3 segundos...")
                 self.state = AVOID_FORWARD
                 self.avoid_forward_start_time = current_time
-                self.avoid_target_yaw = 0.0  # Reset
+                self.avoid_target_yaw = 0.0 
             else:
-                cmd.angular.z = -self.angular_speed  # Sentido horário
+                cmd.angular.z = -self.angular_speed 
 
         elif self.state == AVOID_FORWARD:
             if current_time - self.avoid_forward_start_time < 3.0:
