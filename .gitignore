@@ -2,3 +2,4 @@ workspace/build/*
 workspace/install/*
 workspace/log/*
 *.pyc
+workspace/obstaculo/
