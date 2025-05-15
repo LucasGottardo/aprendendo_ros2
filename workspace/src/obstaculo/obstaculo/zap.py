@@ -52,57 +52,56 @@ class MeuNo(Node):
 
     def talker_callback(self):
         cmd = Twist()
-        destino = self.objetivo - np.array([self.x, self.y])
+        destino = self.objetivo - np.array([self.x, self.y]) #segue até o objetivo final
         distancia_final = np.linalg.norm(destino)
         theta = np.arctan2(destino[1], destino[0])
         ajustar_angulo = np.arctan2(np.sin(theta - self.yaw), np.cos(theta - self.yaw))
 
-        if (distancia_final <= 0.2):
+        if (distancia_final <= 0.2): #objetivo alcançado
             cmd.linear.x = 0.0
             cmd.angular.z = 0.0
             self.publisher.publish(cmd)
             print(distancia_final)
 
-        if not self.desviando and (self.distancia_frente <= 1.0 or self.distancia_direita <= 0.5 or self.distancia_esquerda <= 0.5):
-            self.desviando = True
-            self.tempo_inicio_desvio = time.time()
-            cmd.linear.x = 0.0
-            cmd.angular.z = 0.0
-            self.posicao_temp_x = [(self.x + 1.5, self.y)]
-            self.posicao_temp_y = [(self.x, self.y + 1.5)]
-            random_interger = random.randint(1,2)
-            if random_interger == 1:
-                destino = self.posicao_temp_x
-                cmd.linear.x = 0.5
-                cmd.angular.y = 0.0
-                return
-            else :
-                destino = self.posicao_temp_y
-                cmd.linear.x = 0.5
-                cmd.angular.y = 0.0
-                return
+        # if not self.desviando and (self.distancia_frente <= 1.0 or self.distancia_direita <= 0.5 or self.distancia_esquerda <= 0.5):
+        #     self.tempo_inicio_desvio = time.time()
+        #     self.posicao_temp_x = [(self.x + 1.5, self.y)]
+        #     self.posicao_temp_y = [(self.x, self.y + 1.5)]
+        #     random_interger = random.randint(1,2)
+        #     if random_interger == 1:
+        #         destino = self.posicao_temp_x
+        #         cmd.linear.x = 0.5
+        #         cmd.angular.y = 0.0
+        #         return
+        #     else :
+        #         destino = self.posicao_temp_y
+        #         cmd.linear.x = 0.5
+        #         cmd.angular.y = 0.0
+        #         return
 
 
-            self.publisher.publish(cmd)
-            return
+        #     self.publisher.publish(cmd)
+        #     return
     
-        if self.desviando:
-            if time.time() - self.tempo_inicio_desvio < 2:
-                cmd.linear.x = 0.0
-                cmd.angular.z = 0.2
-                self.publisher.publish(cmd)
-                return
-            else:
-                self.desviando = False
+        # if self.desviando:
+        #     if time.time() - self.tempo_inicio_desvio < 2:
+        #         cmd.linear.x = 0.0
+        #         cmd.angular.z = 0.2
+        #         self.publisher.publish(cmd)
+        #     else:
+        #         self.desviando = False
         
-        if abs(ajustar_angulo) > 0.1:
-            cmd.linear.x = 0.0
-            cmd.angular.z = 0.2
-        else:
-            cmd.linear.x = 0.2
-            cmd.angular.z = 0.0
+        # if abs(ajustar_angulo) > 0.1:
+        #     cmd.linear.x = 0.0
+        #     cmd.angular.z = 0.2
+        # else:
+        #     cmd.linear.x = 0.2
+        #     cmd.angular.z = 0.0
             
-        self.publisher.publish(cmd)
+        # self.publisher.publish(cmd)
+
+    def desviar (self):
+        if time.time() - self.tempo
 
 
     # Destrutor do nó
