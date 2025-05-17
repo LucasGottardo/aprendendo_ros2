@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'wavefront'
+package_name = 'rtt'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'aaaaaaa = wavefront.aaaaaaa:main'
+            'batatopolis = rtt.batatopolis:main' 
         ],
     },
 )
