@@ -1,12 +1,3 @@
-#ola professor, para rodar este nó é necessario usar 
-    #ros2 run rtt batatopolis --ros-args \
-    #-p map_yaml_path:=/home/robot/workspace/map.yaml \
-    #-p start_x:=1.0 -p start_y:=1.0 \
-    #-p goal_min_x:=3.8 -p goal_min_y:=1.8 \
-    #-p goal_max_x:=4.2 -p goal_max_y:=2.2 \
-    #-p step:=0.3 -p max_iter:=10000
-
-
 from __future__ import annotations
 
 import os
