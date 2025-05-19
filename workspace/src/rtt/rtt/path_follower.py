@@ -31,10 +31,9 @@ class PathFollower(Node):
 
     def control_loop(self):
         if self.current_goal_idx >= len(self.path):
-            self.cmd_pub.publish(Twist())  # parar o robô
+            self.cmd_pub.publish(Twist())  
             return
 
-        # Aqui você deveria usar odometria; para simplicidade, vamos usar (0, 0, 0)
         robot_x, robot_y, robot_yaw = 0.0, 0.0, 0.0
 
         goal_x, goal_y = self.path[self.current_goal_idx]
@@ -44,7 +43,7 @@ class PathFollower(Node):
         angle_to_goal = math.atan2(dy, dx)
         angle_diff = angle_to_goal - robot_yaw
 
-        # Normalizar ângulo entre -pi e pi
+        
         angle_diff = (angle_diff + math.pi) % (2 * math.pi) - math.pi
 
         cmd = Twist()
