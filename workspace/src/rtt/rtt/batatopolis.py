@@ -105,9 +105,9 @@ class RRTPlanner(Node):
     def __init__(self):
         super().__init__("rrt_planner")
 
-        self.declare_parameter("map_yaml_path", os.path.expanduser('~/workspace/maps/map.yaml'))
-        self.declare_parameter("start_x", 1.0)
-        self.declare_parameter("start_y", 1.0)
+        self.declare_parameter("map_yaml_path", os.path.expanduser('~/workspace/map.yaml'))
+        self.declare_parameter("start_x", 0.1)
+        self.declare_parameter("start_y", 0.025)
         # Parâmetros da área do objetivo
         self.declare_parameter("goal_min_x", 3.8)
         self.declare_parameter("goal_min_y", 1.8)
@@ -200,14 +200,14 @@ class RRTPlanner(Node):
                             fill=(255, 0, 0), width=2)
                     prev_point = curr_point
 
-            out_path = Path("~/mapa_rrt_caminho.png").expanduser()
+            out_path = Path("~/workspace/mapa_rrt_caminho.png").expanduser()
             rgb_img.save(out_path)
             self.get_logger().info(f"PNG salvo em {out_path}")
             
         except Exception as e:
             self.get_logger().error(f"Erro ao salvar imagem: {str(e)}")
 
-            out_path = Path("~/mapa_rrt_caminho.png").expanduser()
+            out_path = Path("~/workspace/mapa_rrt_caminho.png").expanduser()
             rgb_img.save(out_path)
             self.get_logger().info(f"PNG salvo em {out_path}")
 

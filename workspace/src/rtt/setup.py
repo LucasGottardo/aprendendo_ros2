@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'batatopolis = rtt.batatopolis:main' 
+            'batatopolis = rtt.batatopolis:main', 
+            'path_follower = rtt.path_follower:main'
         ],
     },
 )

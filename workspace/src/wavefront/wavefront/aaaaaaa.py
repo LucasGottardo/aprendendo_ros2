@@ -1,9 +1,3 @@
-#Ola professor, eu fiz este codigo para ao invez de rodar no gazebo, apenas gerar uma imagem pgn exibindo o caminho escolhido
-#para rodar o codigo estou usando o comando ros2 run wavefront aaaaaaa --ros-args   -p map_yaml_path:=/home/robot/workspace/install/wavefront/share/wavefront/maps/map.yaml
-#porem o mapa é gerado na maquina virtual e para visualiza-lo é necessario transferilo para a memoria do computador em si
-#para isso usei o comando do terminal fora da maquina virtual docker cp ros-env:/home/robot/mapa_com_caminho.png .
-#isso deve abrir o mapa :), eu espero
-#como ultima coisa coloquei o mapa que eu gerei ali (juro que eu nao pintei no paint)
 
 import numpy as np
 import yaml
@@ -27,7 +21,7 @@ class fofinho(Node):
         self.publisher_ = self.create_publisher(Path, 'wavefront_path', 10)
 
         # Carrega parâmetros
-        self.declare_parameter('map_yaml_path', os.path.expanduser('~/workspace/maps/map.yaml'))
+        self.declare_parameter('map_yaml_path', os.path.expanduser('~/workspace/map.yaml'))
         caminho_yaml = self.get_parameter('map_yaml_path').get_parameter_value().string_value
         self.get_logger().info(f'Usando arquivo YAML: {caminho_yaml}')
 
@@ -133,7 +127,7 @@ class fofinho(Node):
             path.poses.append(pose)
         return path
 
-    def salvar_imagem_com_caminho(self, mapa_original, caminho, nome_arquivo='~/mapa_com_caminho.png'):
+    def salvar_imagem_com_caminho(self, mapa_original, caminho, nome_arquivo='~/workspace/mapa_com_caminho.png'):
         imagem_colorida = np.stack((mapa_original,)*3, axis=-1)
 
         for px, py in caminho:
